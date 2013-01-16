@@ -1,0 +1,40 @@
+#!/bin/bash
+# bin/compile <build-dir> <cache-dir>
+
+set -e
+
+# config
+NGINX_VERSION="1.2.6"
+S3_BUCKET="zettacal.heroku.buildpack.nginx"
+
+# parse and derive params
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+# s3 packages
+NGINX_PACKAGE="http://${S3_BUCKET}.s3.amazonaws.com/nginx-${NGINX_VERSION}.tgz"
+# NGINX_PACKAGE="http://${S3_BUCKET}.s3.amazonaws.com/nginx-${NGINX_VERSION}.tar.gz"
+#NGINX_PACKAGE="http://mbilker.us/nginx/nginx-${NGINX_VERSION}.tgz"
+
+# vendor directories
+VENDORED_NGINX=$(mktemp -d -t nginx.XXXXXX)
+
+# download and upack packages
+echo "-----> Fetching nginx binaries"
+curl $NGINX_PACKAGE -s -o - | tar xzf - -C $VENDORED_NGINX
+
+# vendor nginx into the slug
+echo "-----> Vendoring nginx $NGINX_VERSION"
+mkdir -p "$BUILD_DIR/bin"
+cp "$VENDORED_NGINX/sbin/nginx" "$BUILD_DIR/bin/nginx"
+
+# build a startup script
+cat <<EOF >"$BUILD_DIR/bin/start_nginx"
+#!/usr/bin/env bash
+erb nginx.conf.erb > conf/nginx.conf
+mkdir -p logs
+touch logs/access.log logs/error.log
+(tail -qF -n 0 --pid=\$\$ logs/*.log &)
+exec bin/nginx -p .
+EOF
+chmod +x "$BUILD_DIR/bin/start_nginx"
