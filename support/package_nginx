@@ -10,7 +10,7 @@ if [ -z "$nginx_version" -o -z "$pcre_version" ]; then
   exit 1
 fi
 
-# these constants are set on the Heroku app which will use this this buildpack
+# these constants are set on the Heroku Vulcan app which will manage this this buildpack
 if [ -z "$AWS_ID" ]; then
  echo "must set AWS_ID"
  exit 1
@@ -39,7 +39,7 @@ curl ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.
 tar xzf pcre.tgz
 
 # build and package nginx for heroku
-vulcan build -v -n nginx -o $tempdir/nginx-${nginx_version}.tgz -c "cd nginx-${nginx_version} && ./configure --prefix=/app/vendor/nginx --with-pcre=../pcre-${pcre_version} --with-http_stub_status_module --with-http_gzip_static_module --with-http_realip_module && make install"
+vulcan build -v -n zettacal-nginx -o $tempdir/nginx-${nginx_version}.tgz -c "cd nginx-${nginx_version} && ./configure --prefix=/app/vendor/nginx --with-pcre=../pcre-${pcre_version} --with-http_stub_status_module --with-http_gzip_static_module --with-http_realip_module && make install"
 
 # upload nginx to s3
 $basedir/aws/s3 put $S3_BUCKET \
