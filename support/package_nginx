@@ -10,6 +10,7 @@ if [ -z "$nginx_version" -o -z "$pcre_version" ]; then
   exit 1
 fi
 
+# these constants are set on the Heroku app which will use this this buildpack
 if [ -z "$AWS_ID" ]; then
  echo "must set AWS_ID"
  exit 1

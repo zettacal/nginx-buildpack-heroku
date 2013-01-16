@@ -2,10 +2,12 @@
 
 **Buildpack dependency:**
   * Vulcan gem
+  * Vulcan build server on Heroku
 
-**App dependency:** _(set in bin/detect)_
-  * `nginx.conf.erb` in application root _(used to configure nginx)_
-  * S3 with Heroku config vars for AWS_ID AWS_SECRET S3_BUCKET
+**App dependency:** 
+  * `nginx.conf.erb` in application root _(set in bin/detect & used to configure Nginx)_
+  * Our Nginx build staged in our S3 bucket (Built by Vulcan build server)
+  * Heroku config vars for AWS_ID AWS_SECRET S3_BUCKET
 
 **Usage:**
 
