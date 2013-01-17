@@ -1,20 +1,16 @@
-# ZettaCal Nginx Buildpack for Heroku
+## ZettaCal Nginx Buildpack for Heroku
 
 **Buildpack dependencies:**
   * Vulcan gem
   * Vulcan build server on Heroku
+  * s3cmd _(for Vulcan build output S3 upload)_
 
 **App dependencies:** 
-  * `nginx.conf.erb` in application root _(set in Buildpack bin/detect & used to configure Nginx)_
-  * Our Nginx build staged in our S3 bucket (Built by Vulcan build server)
   * Heroku config var for BUILDPACK_URL
+  * `nginx.conf.erb` in application root _(Triggers buildpack and configures Nginx)_
+  * Nginx buildpack in S3 bucket (Built by Vulcan build server)
 
 **Usage:**
 
-  1. Run Vulcan server to build Nginx in Heroku environment
-  1. Put Vulcan output where the Buildpack expects it _(bin/compile:34)_
+  1. Use Vulcan to build Nginx in Heroku environment & PUT resulting buildpack on S3
   1. Push the app to Heroku
-
-**Versions:** _(build/build_nginx)_
-  * Nginx v1.2.6
-  * PCRE v8.32

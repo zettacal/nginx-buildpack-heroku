@@ -13,8 +13,6 @@ CACHE_DIR=$2
 
 # s3 packages
 NGINX_PACKAGE="http://${S3_BUCKET}.s3.amazonaws.com/nginx-${NGINX_VERSION}.tgz"
-# NGINX_PACKAGE="http://${S3_BUCKET}.s3.amazonaws.com/nginx-${NGINX_VERSION}.tar.gz"
-#NGINX_PACKAGE="http://mbilker.us/nginx/nginx-${NGINX_VERSION}.tgz"
 
 # vendor directories
 VENDORED_NGINX=$(mktemp -d -t nginx.XXXXXX)
