@@ -2,7 +2,7 @@
 # bin/detect <build-dir>
 
 if [ -f "$1/nginx.conf.erb" ]; then
-  echo "Preparing Nginx" && exit 0
+  echo "ZettaCal Nginx" && exit 0
 else
   echo "Unrecognized app" && exit 1
 fi
