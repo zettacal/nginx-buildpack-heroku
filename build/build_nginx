@@ -10,7 +10,7 @@ if [ -z "$nginx_version" -o -z "$pcre_version" ]; then
   exit 1
 fi
 
-# these constants are set on the Heroku Vulcan app which will manage this this buildpack
+# pass these variables into this script
 if [ -z "$AWS_ID" ]; then
  echo "must set AWS_ID"
  exit 1
