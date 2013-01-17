@@ -2,7 +2,7 @@
 
 **Buildpack dependencies:**
   * Vulcan gem
-  * Vulcan build server on Heroku with config var for BUILDPACK_URL
+  * Vulcan build server on Heroku
 
 **App dependencies:** 
   * `nginx.conf.erb` in application root _(set in Buildpack bin/detect & used to configure Nginx)_
@@ -11,9 +11,10 @@
 
 **Usage:**
 
-  1. Upon ???, our Heroku Vulcan build server compiles Nginx and PUTs it in our S3 bucket
-  1. Upon git push, our Heroku Cedar app GETs this buildpack from our S3 bucket
+  1. Run Vulcan server to build Nginx in Heroku environment
+  1. Put Vulcan output where the Buildpack expects it _(bin/compile:34)_
+  1. Push the app to Heroku
 
-**Versions:** _(set in build/build_nginx)_
+**Versions:** _(build/build_nginx)_
   * Nginx v1.2.6
   * PCRE v8.32
