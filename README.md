@@ -9,8 +9,9 @@
 
 **Our app dependencies:** 
   * Heroku config var for BUILDPACK_URL
+  * Nginx buildpack in S3 bucket
   * `nginx.conf.erb` in application root _(Triggers buildpack)_
-  * Nginx buildpack in S3 bucket _()_
+  * Properly configured nginx
 
 **Usage:**
 
