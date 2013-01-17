@@ -8,7 +8,7 @@
 **App dependencies:** 
   * Heroku config var for BUILDPACK_URL
   * `nginx.conf.erb` in application root _(Triggers buildpack and configures Nginx)_
-  * Nginx buildpack in S3 bucket (Built by Vulcan build server)
+  * Nginx buildpack in S3 bucket _(Built by Vulcan build server)_
 
 **Usage:**
 
