@@ -1,17 +1,19 @@
 ## ZettaCal Nginx Buildpack for Heroku
 
 **Our buildpack dependencies:**
-  * Vulcan gem
-  * Vulcan build server on Heroku
-  * s3cmd _(for Vulcan build output S3 upload)_
+  * Verfied Heroku account _(If not, Cloudant addon won't install)_
+  * Vulcan gem _(installs Cloudant plugin with verified Heroku account)_
+  * Vulcan build server on Heroku _(requires cloudant addon)_
+  * s3cmd _(upload Vulcan build to S3 - in build/build_nginx:25)_
+  * On S3, make sure the packaged nginx has `Content-Type: application/x-gzip`
 
 **Our app dependencies:** 
   * Heroku config var for BUILDPACK_URL
-  * `nginx.conf.erb` in application root _(Triggers buildpack and configures Nginx)_
-  * Nginx buildpack in S3 bucket _(Built by Vulcan build server)_
+  * `nginx.conf.erb` in application root _(Triggers buildpack)_
+  * Nginx buildpack in S3 bucket _()_
 
 **Usage:**
 
-  1. Use Vulcan to build Nginx in Heroku environment & PUT resulting buildpack on S3
+  1. Run the build script
   1. Push the app to Heroku
   1. Profit
