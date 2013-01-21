@@ -22,15 +22,10 @@ echo "-----> Vendoring nginx 1.2.6"
 mkdir -p "$BUILD_DIR/bin"
 cp "$VENDORED_NGINX/sbin/nginx" "$BUILD_DIR/bin/nginx"
 
-# cache the nginx config
-echo "-----> Caching nginx.conf.erb"
-cd ../
-cp "prep/nginx.conf.erb" "$CACHE_DIR/nginx.conf.erb"
-
-# build a startup script
+# build startup script
 cat <<EOF >"$BUILD_DIR/bin/start_nginx"
 #!/usr/bin/env bash
-erb $CACHE_DIR/nginx.conf.erb > conf/nginx.conf
+erb $BUILD_DIR/serv/nginx.conf.erb > conf/nginx.conf
 mkdir -p logs
 touch logs/access.log logs/error.log
 (tail -qF -n 0 --pid=\$\$ logs/*.log &)
