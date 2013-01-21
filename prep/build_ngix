@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+nginx_version="1.2.6"
+pcre_version="8.32"
+s3_bucket="s3://zettacal.heroku.buildpack.nginx"
+
+basedir="$( cd -P "$( dirname "$0" )" && pwd )"
+
+# make a temp directory
+tempdir=$(mktemp -d -t nginx.XXXXXX)
+pushd $tempdir
+
+curl http://nginx.org/download/nginx-${nginx_version}.tar.gz -o nginx.tgz
+tar xzf nginx.tgz
+
+curl ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.gz -o pcre.tgz
+tar xzf pcre.tgz
+
+# build and package nginx for heroku
+vulcan build -v -n nginx -o $tempdir/nginx-${nginx_version}.tgz -c "cd nginx-${nginx_version} && ./configure --prefix=/app/vendor/nginx --with-pcre=../pcre-${pcre_version} --with-http_stub_status_module --with-http_gzip_static_module --with-http_ssl_module --with-http_realip_module && make install"
+
+# upload nginx package to s3 with s3cmd 
+s3cmd put --force --reduced-redundancy --acl-public $tempdir/nginx-${nginx_version}.tgz ${s3_bucket}/nginx-${nginx_version}.tgz

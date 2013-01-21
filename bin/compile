@@ -25,7 +25,7 @@ cp "$VENDORED_NGINX/sbin/nginx" "$BUILD_DIR/bin/nginx"
 # build a startup script
 cat <<EOF >"$BUILD_DIR/bin/start_nginx"
 #!/usr/bin/env bash
-erb $BUILD_DIR/conf/nginx.conf.erb > conf/nginx.conf
+erb ../prep/nginx.conf.erb > conf/nginx.conf
 mkdir -p logs
 touch logs/access.log logs/error.log
 (tail -qF -n 0 --pid=\$\$ logs/*.log &)
