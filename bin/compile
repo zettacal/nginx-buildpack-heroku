@@ -23,7 +23,7 @@ mkdir -p "$BUILD_DIR/bin"
 cp "$VENDORED_NGINX/sbin/nginx" "$BUILD_DIR/bin/nginx"
 
 # cache the nginx config
-cp ../prep/nginx.conf.erb $CACHE_DIR/nginx.conf.erb
+cp "../prep/nginx.conf.erb" "$CACHE_DIR/nginx.conf.erb"
 
 # build a startup script
 cat <<EOF >"$BUILD_DIR/bin/start_nginx"
