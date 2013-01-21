@@ -2,7 +2,7 @@
 # bin/detect <build-dir>
 
 if [ -f "$1/build/index.html" ]; then
-  echo "ZettaCal Nginx" && exit 0
+  echo "ZettaCal nginx" && exit 0
 else
   echo "Unrecognized app" && exit 1
 fi
