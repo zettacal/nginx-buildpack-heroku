@@ -24,9 +24,8 @@ cp "$VENDORED_NGINX/sbin/nginx" "$BUILD_DIR/bin/nginx"
 
 # cache the nginx config
 echo "-----> Caching nginx.conf.erb"
-echo "pwd"
 mkdir -p "$CACHE_DIR"
-cp ../prep/nginx.conf.erb "$CACHE_DIR/nginx.conf.erb"
+cp "$(dirname $0)/nginx.conf.erb" "$CACHE_DIR/nginx.conf.erb"
 
 # build a startup script
 cat <<EOF >"$BUILD_DIR/bin/start_nginx"
