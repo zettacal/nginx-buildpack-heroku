@@ -24,7 +24,7 @@ cp "$VENDORED_NGINX/sbin/nginx" "$BUILD_DIR/bin/nginx"
 
 # cache the nginx config
 echo "-----> Caching nginx.conf.erb"
-echo pwd
+echo "pwd"
 mkdir -p "$CACHE_DIR"
 cp ../prep/nginx.conf.erb "$CACHE_DIR/nginx.conf.erb"
 
