@@ -2,19 +2,21 @@
 
 **Our buildpack dependencies:**
   * Verfied Heroku account _(If not, Cloudant addon won't install)_
-  * Vulcan gem _(installs Cloudant plugin with verified Heroku account)_
-  * Vulcan build server on Heroku _(requires cloudant addon)_
-  * s3cmd _(upload Vulcan build to S3 - in build/build_nginx:25)_
-  * On S3, make sure the packaged nginx has `Content-Type: application/x-gzip`
+  * Vulcan gem
+  * Vulcan build server _(requires Cloudant addon)_
+  * s3cmd utility
+  * `Content-Type: application/x-gzip` on packaged nginx .tgz
 
 **Our app dependencies:** 
+  * This buildpack on github
   * Heroku config var for BUILDPACK_URL
-  * Nginx buildpack in S3 bucket
-  * `nginx.conf.erb` in application root _(Triggers buildpack)_
+  * Nginx package in S3 bucket _(Our build script puts it there)_
+  * Presense of build/index.html _(Triggers buildpack)_
   * Properly configured nginx
 
 **Usage:**
 
   1. Run the build script
+  1. Push the buildpack to Github
   1. Push the app to Heroku
   1. Profit

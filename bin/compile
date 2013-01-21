@@ -3,16 +3,12 @@
 
 set -e
 
-# config
-NGINX_VERSION="1.2.6"
-S3_BUCKET="zettacal.heroku.buildpack.nginx"
-
 # parse and derive params
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-# s3 packages
-NGINX_PACKAGE="http://${S3_BUCKET}.s3.amazonaws.com/nginx-${NGINX_VERSION}.tgz"
+# s3 package
+NGINX_PACKAGE="http://zettacal.heroku.buildpack.nginx.s3.amazonaws.com/nginx-1.2.6.tgz"
 
 # vendor directories
 VENDORED_NGINX=$(mktemp -d -t nginx.XXXXXX)
@@ -29,7 +25,7 @@ cp "$VENDORED_NGINX/sbin/nginx" "$BUILD_DIR/bin/nginx"
 # build a startup script
 cat <<EOF >"$BUILD_DIR/bin/start_nginx"
 #!/usr/bin/env bash
-erb nginx.conf.erb > conf/nginx.conf
+erb ../prep/nginx.conf.erb > conf/nginx.conf
 mkdir -p logs
 touch logs/access.log logs/error.log
 (tail -qF -n 0 --pid=\$\$ logs/*.log &)
