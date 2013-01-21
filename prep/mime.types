@@ -1,0 +1,14 @@
+types {
+    text/html                             html htm;
+    text/css                              css;
+    text/plain                            txt;
+
+    image/gif                             gif;
+    image/jpeg                            jpeg jpg;
+    image/png                             png;
+
+    application/x-javascript              js;
+    application/json                      json;
+    application/pdf                       pdf;
+    application/x-shockwave-flash         swf;
+}

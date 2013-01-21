@@ -23,10 +23,11 @@ echo "-----> Vendoring nginx 1.2.6"
 mkdir -p "$BUILD_DIR/bin"
 cp "$VENDORED_NGINX/sbin/nginx" "$BUILD_DIR/bin/nginx"
 
-# build nginx config
-echo "-----> Staging nginx.conf.erb"
+# build nginx config & mime types
+echo "-----> Staging nginx.conf.erb and mime.types"
 mkdir -p "$BUILD_DIR/conf"
 cp $BUILDPACK_DIR/prep/nginx.conf.erb $BUILD_DIR/conf/nginx.conf.erb
+cp $BUILDPACK_DIR/prep/mime.types $BUILD_DIR/conf/mime.types
 
 # build startup script
 echo "-----> Building nginx startup script"
