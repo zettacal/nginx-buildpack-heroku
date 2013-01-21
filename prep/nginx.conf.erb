@@ -1,5 +1,5 @@
-worker_processes  4;
-daemon            off;
+worker_processes  1;
+daemon off;
 
 
 events {
@@ -8,32 +8,37 @@ events {
 
 
 http {
-    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                      '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for"';
+    include       mime.types;
+    default_type  application/octet-stream;
+    gzip          on;
+    sendfile      on;
+    tcp_nopush  on;
+
+#    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+#                      '$status $body_bytes_sent "$http_referer" '
+#                      '"$http_user_agent" "$http_x_forwarded_for"';
 
     access_log  logs/access.log  main;
     error_log   logs/error.log  notice;
 
-    sendfile    on;
-    tcp_nopush  on;
-
-    gzip  on;
-
-    include       mime.types;
-    default_type  application/octet-stream;
-
     server {
         server_name  localhost;
         listen       <%= ENV['PORT'] %>;
-
         root  <%= ENV['HOME'] %>/build;
-
         index  index.html ;
+#        try_files $uri $uri/ index.html;
 
-        try_files $uri $uri/ index.html;
-
-        location ~ /\. {
+        location / {
+            deny            all;
+            access_log      off;
+            log_not_found   off;
+        }
+        location /stylesheets {
+            deny            all;
+            access_log      off;
+            log_not_found   off;
+        }
+        location /javascripts {
             deny            all;
             access_log      off;
             log_not_found   off;
