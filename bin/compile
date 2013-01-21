@@ -6,6 +6,7 @@ set -e
 # parse and derive params
 BUILD_DIR=$1
 CACHE_DIR=$2
+BUILDPACK_DIR=`cd $(dirname $0); cd ..; pwd`
 
 # s3 package
 NGINX_PACKAGE="http://zettacal.heroku.buildpack.nginx.s3.amazonaws.com/nginx-1.2.6.tgz"
@@ -22,10 +23,16 @@ echo "-----> Vendoring nginx 1.2.6"
 mkdir -p "$BUILD_DIR/bin"
 cp "$VENDORED_NGINX/sbin/nginx" "$BUILD_DIR/bin/nginx"
 
+# build nginx config
+echo "-----> Staging nginx.conf.erb"
+mkdir -p "$BUILD_DIR/conf"
+cp $BUILDPACK_DIR/prep/nginx.conf.erb $BUILD_DIR/conf/nginx.conf.erb
+
 # build startup script
+echo "-----> Building nginx startup script"
 cat <<EOF >"$BUILD_DIR/bin/start_nginx"
 #!/usr/bin/env bash
-erb $BUILD_DIR/serv/nginx.conf.erb > conf/nginx.conf
+erb conf/nginx.conf.erb > conf/nginx.conf
 mkdir -p logs
 touch logs/access.log logs/error.log
 (tail -qF -n 0 --pid=\$\$ logs/*.log &)
