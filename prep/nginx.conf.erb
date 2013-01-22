@@ -29,7 +29,7 @@ http {
 
         location / {
             if_modified_since           off;
-            add_header Last-Modified    "";
+            # add_header Last-Modified    "";
             # add_header Cache-Control    "no-cache, must-revalidate, proxy-revalidate";
             access_log                  off;
             log_not_found               off;
