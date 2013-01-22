@@ -12,7 +12,7 @@ http {
     default_type  application/octet-stream;
     gzip          on;
     sendfile      on;
-    tcp_nopush  on;
+    tcp_nopush    on;
 
    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
                      '$status $body_bytes_sent "$http_referer" '
@@ -22,23 +22,17 @@ http {
     error_log   logs/error.log  notice;
 
     server {
-        server_name  localhost;
-        listen       <%= ENV['PORT'] %>;
-        root  <%= ENV['HOME'] %>/build;
-        index  index.html ;
-#        try_files $uri $uri/ index.html;
+        server_name                     localhost;
+        listen                          <%= ENV['PORT'] %>;
+        root                            <%= ENV['HOME'] %>/build;
+        index                           index.html ;
 
         location / {
-            access_log      off;
-            log_not_found   off;
-        }
-        location /stylesheets {
-            access_log      off;
-            log_not_found   off;
-        }
-        location /javascripts {
-            access_log      off;
-            log_not_found   off;
+            if_modified_since           off;
+            add_header Last-Modified    "";
+            add_header Cache-Control    "no-cache, must-revalidate, proxy-revalidate";
+            access_log                  off;
+            log_not_found               off;
         }
     }
 }
