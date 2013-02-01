@@ -29,6 +29,10 @@ mkdir -p "$BUILD_DIR/conf"
 cp $BUILDPACK_DIR/prep/nginx.conf.erb $BUILD_DIR/conf/nginx.conf.erb
 cp $BUILDPACK_DIR/prep/mime.types $BUILD_DIR/conf/mime.types
 
+# build source files
+echo "-----> Building static files"
+bundle exec rake build
+
 # build startup script
 echo "-----> Building nginx startup script"
 cat <<EOF >"$BUILD_DIR/bin/start_nginx"
