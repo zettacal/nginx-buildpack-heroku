@@ -31,7 +31,7 @@ cp $BUILDPACK_DIR/prep/mime.types $BUILD_DIR/conf/mime.types
 
 # build source files
 echo "-----> Building static files"
-rake build
+middleman build
 
 # build startup script
 echo "-----> Building nginx startup script"
